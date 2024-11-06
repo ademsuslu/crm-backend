@@ -11,6 +11,15 @@ exports.createEmployee = async (req, res) => {
   }
 }
 
+exports.getAllEmployees = async (req, res) => {
+  try {
+    const employees = await Employee.find()
+    res.status(200).json(employees)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
 // Belirli bir iş yerine ait tüm çalışanları listeleme
 exports.getEmployeesByBusiness = async (req, res) => {
   try {

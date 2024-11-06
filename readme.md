@@ -14,5 +14,5 @@ POST /api/employees
   "name": "Mehmet Can",
   "position": "Satış Müdürü",
   "phone": "+905556667778",
-  "businessId": "iş_yerinin_id'si"
+  "businessId": "672b59c923af8ce7d48cec12"
 }
