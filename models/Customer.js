@@ -24,6 +24,7 @@ const customerSchema = new mongoose.Schema(
         type: String,
         required: true,
         unique: true,
+        sparse: true, // Bu, null veya boş email değerlerini engeller.
       },
       adres: {
         sokak: String,
