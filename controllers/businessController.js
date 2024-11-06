@@ -14,7 +14,7 @@ exports.createBusiness = async (req, res) => {
 // Tüm iş yerlerini listeleme
 exports.getAllBusinesses = async (req, res) => {
   try {
-    const businesses = await Business.find()
+    const businesses = await Business.find().populate('employees')
     res.status(200).json(businesses)
   } catch (error) {
     res.status(500).json({ message: error.message })
