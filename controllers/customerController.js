@@ -67,15 +67,17 @@ exports.searchCustomer = async (req, res) => {
   try {
     const { ad } = req.query
 
-    // Eğer `ad` parametresi yoksa tüm müşterileri döner
+    // `ad` parametresi yoksa hata mesajı gönder
     if (!ad) {
       return res
         .status(400)
         .json({ message: 'Arama için müşteri adı (ad) belirtmelisiniz.' })
     }
 
-    // `ad` parametresiyle arama yap, regex kullanarak tam eşleşme gerekmeden arama yapıyoruz
-    const customers = await Customer.find({ ad: { $regex: ad, $options: 'i' } })
+    // `ad` parametresi ile arama yap, `_id` ile değil
+    const customers = await Customer.find({
+      ad: { $regex: new RegExp(ad, 'i') },
+    })
 
     res.status(200).json(customers)
   } catch (error) {
