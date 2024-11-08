@@ -61,3 +61,24 @@ exports.deleteCustomer = async (req, res) => {
     res.status(500).json({ message: error.message })
   }
 }
+
+// search
+exports.searchCustomer = async (req, res) => {
+  try {
+    const { ad } = req.query
+
+    // Eğer `ad` parametresi yoksa tüm müşterileri döner
+    if (!ad) {
+      return res
+        .status(400)
+        .json({ message: 'Arama için müşteri adı (ad) belirtmelisiniz.' })
+    }
+
+    // `ad` parametresiyle arama yap, regex kullanarak tam eşleşme gerekmeden arama yapıyoruz
+    const customers = await Customer.find({ ad: { $regex: ad, $options: 'i' } })
+
+    res.status(200).json(customers)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
