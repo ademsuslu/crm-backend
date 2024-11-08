@@ -5,11 +5,14 @@ const customerRoutes = require('./routes/customerRoutes')
 const businessRoutes = require('./routes/businessRoutes')
 const employeeRoutes = require('./routes/employeeRoutes')
 const bodyParser = require('body-parser')
+const cors = require('cors') // cors paketini dahil ediyoruz
 
 dotenv.config()
 connectDB()
 
 const app = express()
+
+app.use(cors()) // cors'u uygulamada kullanıyoruz
 app.use(bodyParser.json())
 
 app.use('/api/customers', customerRoutes)
