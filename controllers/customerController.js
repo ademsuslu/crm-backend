@@ -63,24 +63,33 @@ exports.deleteCustomer = async (req, res) => {
 }
 
 // search
+
 exports.searchCustomer = async (req, res) => {
   try {
+    const sanitizeInput = (input) => {
+      return input.replace(/[^a-zA-Z0-9\s]/g, '') // Sadece harf ve sayıları kabul et
+    }
     const { ad } = req.query
-
-    // `ad` parametresi yoksa hata mesajı gönder
+    const sanitizedAd = sanitizeInput(ad) // ad parametresini temizle
+    // Arama için ad parametresi kontrolü
     if (!ad) {
       return res
         .status(400)
         .json({ message: 'Arama için müşteri adı (ad) belirtmelisiniz.' })
     }
 
-    // `ad` parametresi ile arama yap, `_id` ile değil
+    // Müşterileri ad alanına göre regex ile filtreleyerek getirme
     const customers = await Customer.find({
-      ad: { $regex: new RegExp(ad, 'i') },
+      ad: { $regex: sanitizedAd, $options: 'i' },
     })
 
-    res.status(200).json(customers)
+    if (customers.length === 0) {
+      return res.status(404).json({ message: 'Müşteri bulunamadı.' })
+    }
+
+    return res.status(200).json(customers) // return ifadesini ekleyin
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    console.error(error)
+    return res.status(500).json({ message: error.message }) // return ekleyin
   }
 }

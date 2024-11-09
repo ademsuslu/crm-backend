@@ -3,10 +3,10 @@ const router = express.Router()
 const customerController = require('../controllers/customerController')
 
 router.post('/', customerController.createCustomer)
+router.get('/search', customerController.searchCustomer) // /search rotası en üste alındı
 router.get('/', customerController.getAllCustomers)
 router.get('/:id', customerController.getCustomerById)
 router.put('/:id', customerController.updateCustomer)
 router.delete('/:id', customerController.deleteCustomer)
-router.get('/search', customerController.searchCustomer)
 
 module.exports = router
