@@ -5,13 +5,19 @@ const customerRoutes = require('./routes/customerRoutes')
 const businessRoutes = require('./routes/businessRoutes')
 const employeeRoutes = require('./routes/employeeRoutes')
 const bodyParser = require('body-parser')
+
+//! securty
 const helmet = require('helmet')
+const csrf = require('csurf')
+
 const cors = require('cors') // cors paketini dahil ediyoruz
 dotenv.config()
 connectDB()
 
 const app = express()
 
+const csrfProtection = csrf({ cookie: true })
+app.use(csrfProtection)
 app.use(cors()) // cors'u uygulamada kullanıyoruz
 app.use(bodyParser.json())
 app.use(helmet())

@@ -66,9 +66,6 @@ exports.deleteCustomer = async (req, res) => {
 
 exports.searchCustomer = async (req, res) => {
   try {
-    const sanitizeInput = (input) => {
-      return input.replace(/[^a-zA-Z0-9\s]/g, '') // Sadece harf ve sayıları kabul et
-    }
     const { ad } = req.query
     const sanitizedAd = sanitizeInput(ad) // ad parametresini temizle
     // Arama için ad parametresi kontrolü
@@ -92,4 +89,8 @@ exports.searchCustomer = async (req, res) => {
     console.error(error)
     return res.status(500).json({ message: error.message }) // return ekleyin
   }
+}
+
+const sanitizeInput = (input) => {
+  return input.replace(/[^a-zA-Z0-9\s]/g, '') // Sadece harf ve sayıları kabul et
 }
