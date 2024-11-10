@@ -3,7 +3,7 @@ const router = express.Router()
 const customerController = require('../controllers/customerController')
 
 router.post('/', customerController.createCustomer)
-router.get('/search', customerController.searchCustomer) // /search rotası en üste alındı
+router.get('/search', customerController.searchCustomer)
 router.get('/', customerController.getAllCustomers)
 router.get('/:id', customerController.getCustomerById)
 router.put('/:id', customerController.updateCustomer)

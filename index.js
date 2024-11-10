@@ -1,5 +1,6 @@
 const express = require('express')
 const dotenv = require('dotenv')
+const colors = require('colors')
 const connectDB = require('./config/db')
 const customerRoutes = require('./routes/customerRoutes')
 const businessRoutes = require('./routes/businessRoutes')
@@ -8,8 +9,8 @@ const bodyParser = require('body-parser')
 
 //! securty
 const helmet = require('helmet')
-
 const cors = require('cors') // cors paketini dahil ediyoruz
+
 dotenv.config()
 connectDB()
 
@@ -25,5 +26,5 @@ app.use('/api/employees', employeeRoutes)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
-  console.log(`Sunucu ${PORT} portunda çalışıyor`)
+  console.log(colors.bgCyan(`Sunucu ${PORT} portunda çalışıyor`))
 })

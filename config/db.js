@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
-
+const colors = require('colors')
 dotenv.config()
 
 const connectDB = async () => {
@@ -9,7 +9,7 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    console.log('MongoDB bağlantısı başarılı')
+    console.log(colors.blue('MongoDB bağlantısı başarılı'))
   } catch (error) {
     console.error('MongoDB bağlantı hatası:', error.message)
     process.exit(1)
