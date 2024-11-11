@@ -5,9 +5,12 @@ exports.createCustomer = async (req, res) => {
   try {
     const customer = new Customer(req.body)
     await customer.save()
-    res.status(201).json(customer)
+    res.status(201).json({
+      data: customer,
+      message: 'Create Success',
+    })
   } catch (error) {
-    res.status(400).json({ message: error.message })
+    res.status(400).json({ message: 'Create Unsuccess! ' })
   }
 }
 
