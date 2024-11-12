@@ -46,7 +46,7 @@ exports.updateCustomer = async (req, res) => {
     if (!customer) {
       return res.status(404).json({ message: 'Müşteri bulunamadı' })
     }
-    res.status(204).json({
+    res.status(200).json({
       data: customer,
       message: 'Edit Success',
     })
