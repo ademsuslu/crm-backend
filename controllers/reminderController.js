@@ -48,14 +48,14 @@ exports.getReminderById = async (req, res) => {
 // Müşteri güncelleme
 exports.updateCustomer = async (req, res) => {
   try {
-    const customer = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+    const reminder = await Reminder.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     })
-    if (!customer) {
-      return res.status(404).json({ message: 'Müşteri bulunamadı' })
+    if (!reminder) {
+      return res.status(404).json({ message: 'Reminder bulunamadı' })
     }
     res.status(200).json({
-      data: customer,
+      data: reminder,
       message: 'Edit Success',
     })
   } catch (error) {
