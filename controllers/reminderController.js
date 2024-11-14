@@ -3,8 +3,7 @@ const Reminder = require('../models/Reminder')
 // Müşteri oluşturma
 exports.createReminder = async (req, res) => {
   try {
-    let body = sanitizeInput(req.body)
-    const reminder = new Reminder(body)
+    const reminder = new Reminder(req.body)
     await reminder.save()
     res.status(201).json({
       data: reminder,
