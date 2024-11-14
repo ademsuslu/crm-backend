@@ -27,6 +27,55 @@ exports.getAllReminder = async (req, res) => {
   }
 }
 
+// --------------------------------------------------
+
+// Belirli bir müşteri bilgisi getirme
+exports.getReminderById = async (req, res) => {
+  try {
+    const reminder = await Reminder.findById(req.params.id)
+    if (!reminder) {
+      return res.status(404).json({ message: 'Reminder bulunamadı' })
+    }
+    res.status(200).json({
+      data: reminder,
+      message: 'Reminder',
+    })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+// Müşteri güncelleme
+exports.updateCustomer = async (req, res) => {
+  try {
+    const customer = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    })
+    if (!customer) {
+      return res.status(404).json({ message: 'Müşteri bulunamadı' })
+    }
+    res.status(200).json({
+      data: customer,
+      message: 'Edit Success',
+    })
+  } catch (error) {
+    res.status(400).json({ message: 'Edit Unsuccess!' })
+  }
+}
+
+// Müşteri silme
+exports.deleteCustomer = async (req, res) => {
+  try {
+    const customer = await Customer.findByIdAndDelete(req.params.id)
+    if (!customer) {
+      return res.status(404).json({ message: 'Müşteri bulunamadı' })
+    }
+    res.status(200).json({ message: 'Müşteri silindi' })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
 const sanitizeInput = (input) => {
   return input.replace(/[^a-zA-Z0-9\s]/g, '') // Sadece harf ve sayıları kabul et
 }
