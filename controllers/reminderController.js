@@ -70,9 +70,9 @@ exports.deleteReminder = async (req, res) => {
   try {
     const reminder = await Reminder.findByIdAndDelete(id)
     if (!reminder) {
-      return res.status(404).json({ message: 'Müşteri bulunamadı' })
+      return res.status(404).json({ message: 'Reminder bulunamadı' })
     }
-    res.status(200).json({ message: 'Müşteri silindi' })
+    res.status(200).json({ message: 'Reminder silindi' })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
