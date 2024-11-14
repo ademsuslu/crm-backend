@@ -3,7 +3,8 @@ const Reminder = require('../models/Reminder')
 // Müşteri oluşturma
 exports.createReminder = async (req, res) => {
   try {
-    const reminder = new Reminder(req.body)
+    let body = sanitizeInput(req.body)
+    const reminder = new Reminder(body)
     await reminder.save()
     res.status(201).json({
       data: reminder,
@@ -27,12 +28,11 @@ exports.getAllReminder = async (req, res) => {
   }
 }
 
-// --------------------------------------------------
-
 // Belirli bir müşteri bilgisi getirme
 exports.getReminderById = async (req, res) => {
+  let id = sanitizeInput(req.params.id)
   try {
-    const reminder = await Reminder.findById(req.params.id)
+    const reminder = await Reminder.findById(id)
     if (!reminder) {
       return res.status(404).json({ message: 'Reminder bulunamadı' })
     }
@@ -46,9 +46,11 @@ exports.getReminderById = async (req, res) => {
 }
 
 // Müşteri güncelleme
-exports.updateCustomer = async (req, res) => {
+exports.updateReminder = async (req, res) => {
+  let id = sanitizeInput(req.params.id)
+  let body = sanitizeInput(req.body)
   try {
-    const reminder = await Reminder.findByIdAndUpdate(req.params.id, req.body, {
+    const reminder = await Reminder.findByIdAndUpdate(id, body, {
       new: true,
     })
     if (!reminder) {
@@ -64,10 +66,11 @@ exports.updateCustomer = async (req, res) => {
 }
 
 // Müşteri silme
-exports.deleteCustomer = async (req, res) => {
+exports.deleteReminder = async (req, res) => {
+  let id = sanitizeInput(req.params.id)
   try {
-    const customer = await Customer.findByIdAndDelete(req.params.id)
-    if (!customer) {
+    const reminder = await Reminder.findByIdAndDelete(id)
+    if (!reminder) {
       return res.status(404).json({ message: 'Müşteri bulunamadı' })
     }
     res.status(200).json({ message: 'Müşteri silindi' })
