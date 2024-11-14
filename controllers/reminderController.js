@@ -48,9 +48,9 @@ exports.getReminderById = async (req, res) => {
 // Müşteri güncelleme
 exports.updateReminder = async (req, res) => {
   let id = sanitizeInput(req.params.id)
-  let body = sanitizeInput(req.body)
+
   try {
-    const reminder = await Reminder.findByIdAndUpdate(id, body, {
+    const reminder = await Reminder.findByIdAndUpdate(id, req.body, {
       new: true,
     })
     if (!reminder) {
