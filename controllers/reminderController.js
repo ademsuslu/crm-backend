@@ -28,18 +28,26 @@ const sendMail = (reminder) => {
   })
 }
 
-// `sendTime` alanına göre gönderimi zamanla
-const scheduleMail = (reminder) => {
-  const sendTime = new Date(reminder.sendTime)
-  const currentTime = new Date()
+// `sendTime` zamanı geldiğinde e-posta göndermek için cron job tanımla
+cron.schedule('* * * * *', async () => {
+  // Her dakika çalışır
+  try {
+    const currentTime = new Date()
+    // `sendTime` geçmiş ancak henüz mail gönderilmemiş hatırlatıcıları bul
+    const reminders = await Reminder.find({
+      sendTime: { $lte: currentTime },
+    })
 
-  if (sendTime > currentTime) {
-    const delay = sendTime - currentTime
-    setTimeout(() => sendMail(reminder), delay)
-  } else {
-    console.log('Geçmiş bir zaman girildi, mail gönderilemedi.')
+    // Zamanı gelen her hatırlatıcı için e-posta gönder
+    reminders.forEach(async (reminder) => {
+      sendMail(reminder)
+      // Gönderim işlemi tamamlandıktan sonra `sent` durumunu güncelle
+      await reminder.save()
+    })
+  } catch (error) {
+    console.error('Cron job hatası:', error)
   }
-}
+})
 
 // Yeni reminder oluşturulduğunda schedule işlemini yap
 exports.createReminder = async (req, res) => {
