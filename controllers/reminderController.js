@@ -5,8 +5,11 @@ const Reminder = require('../models/Reminder') // Reminder modelini projenize g�
 const transporter = nodemailer.createTransport({
   service: 'gmail', // Gmail kullanılıyor
   auth: {
-    user: 'maddison53@ethereal.email',
-    pass: 'jn7jnAPss4f63QBp6D',
+    user: 'ademsuslu9080@gmail.com',
+    pass: 'Adem.suslu109578**',
+  },
+  tls: {
+    rejectUnauthorized: false, // Sertifika doğrulamasını geçersiz kılar
   },
 })
 
