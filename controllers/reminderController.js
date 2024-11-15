@@ -1,10 +1,52 @@
-const Reminder = require('../models/Reminder')
+const cron = require('node-cron')
+const nodemailer = require('nodemailer')
+const Reminder = require('../models/Reminder') // Reminder modelini projenize göre import edin
 
-// Müşteri oluşturma
+const transporter = nodemailer.createTransport({
+  service: 'gmail', // Gmail kullanılıyor
+  auth: {
+    user: 'maddison53@ethereal.email',
+    pass: 'jn7jnAPss4f63QBp6D',
+  },
+})
+
+// E-posta gönderme fonksiyonu
+const sendMail = (reminder) => {
+  const mailOptions = {
+    from: reminder.senderMail,
+    to: reminder.receiverMail,
+    subject: 'Hatırlatma',
+    text: reminder.content,
+  }
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Email gönderme hatası:', error)
+    } else {
+      console.log('Email başarıyla gönderildi:', info.response)
+    }
+  })
+}
+
+// `sendTime` alanına göre gönderimi zamanla
+const scheduleMail = (reminder) => {
+  const sendTime = new Date(reminder.sendTime)
+  const currentTime = new Date()
+
+  if (sendTime > currentTime) {
+    const delay = sendTime - currentTime
+    setTimeout(() => sendMail(reminder), delay)
+  } else {
+    console.log('Geçmiş bir zaman girildi, mail gönderilemedi.')
+  }
+}
+
+// Yeni reminder oluşturulduğunda schedule işlemini yap
 exports.createReminder = async (req, res) => {
   try {
     const reminder = new Reminder(req.body)
     await reminder.save()
+    scheduleMail(reminder) // Zamanlamayı ayarla
     res.status(201).json({
       data: reminder,
       message: 'Create Success',
@@ -14,7 +56,9 @@ exports.createReminder = async (req, res) => {
   }
 }
 
-// Tüm müşterileri listeleme
+//! ********************************
+
+// Tüm Reminderleri listeleme
 exports.getAllReminder = async (req, res) => {
   try {
     const reminders = await Reminder.find()
@@ -27,7 +71,7 @@ exports.getAllReminder = async (req, res) => {
   }
 }
 
-// Belirli bir müşteri bilgisi getirme
+// Belirli bir Reminder bilgisi getirme
 exports.getReminderById = async (req, res) => {
   let id = sanitizeInput(req.params.id)
   try {
@@ -44,7 +88,7 @@ exports.getReminderById = async (req, res) => {
   }
 }
 
-// Müşteri güncelleme
+// Reminder güncelleme
 exports.updateReminder = async (req, res) => {
   let id = sanitizeInput(req.params.id)
 
@@ -64,7 +108,7 @@ exports.updateReminder = async (req, res) => {
   }
 }
 
-// Müşteri silme
+// Reminder silme
 exports.deleteReminder = async (req, res) => {
   let id = sanitizeInput(req.params.id)
   try {
