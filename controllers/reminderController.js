@@ -6,7 +6,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail', // Gmail kullanılıyor
   auth: {
     user: 'ademsuslu9080@gmail.com',
-    pass: 'Adem.suslu109578**',
+    pass: 'dsxf giwj iqps npbm',
   },
   tls: {
     rejectUnauthorized: false, // Sertifika doğrulamasını geçersiz kılar
