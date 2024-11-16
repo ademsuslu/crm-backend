@@ -6,6 +6,7 @@ const customerRoutes = require('./routes/customerRoutes')
 const businessRoutes = require('./routes/businessRoutes')
 const employeeRoutes = require('./routes/employeeRoutes')
 const reminderRoutes = require('./routes/reminderRoutes')
+const opportunityRoutes = require('./routes/opportunityRoutes')
 const bodyParser = require('body-parser')
 
 //! securty
@@ -25,6 +26,7 @@ app.use('/api/customers', customerRoutes)
 app.use('/api/businesses', businessRoutes)
 app.use('/api/employees', employeeRoutes)
 app.use('/api/reminder', reminderRoutes)
+app.use('/api/opportunity', opportunityRoutes)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
