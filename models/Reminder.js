@@ -15,6 +15,7 @@ const reminderSchema = new mongoose.Schema(
       required: true,
     },
     sendTime: Date,
+    sent: { type: Boolean, default: false },
   },
   { timestamps: true }
 )

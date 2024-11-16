@@ -22,12 +22,16 @@ const sendMail = (reminder) => {
     text: reminder.content,
   }
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error('Email gönderme hatası:', error)
-    } else {
-      console.log('Email başarıyla gönderildi:', info.response)
-    }
+  return new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Email gönderme hatası:', error)
+        reject(error)
+      } else {
+        console.log('Email başarıyla gönderildi:', info.response)
+        resolve(info.response)
+      }
+    })
   })
 }
 
@@ -36,17 +40,22 @@ cron.schedule('* * * * *', async () => {
   // Her dakika çalışır
   try {
     const currentTime = new Date()
-    // `sendTime` geçmiş ancak henüz mail gönderilmemiş hatırlatıcıları bul
+    // `sendTime` geçmiş ve henüz gönderilmemiş hatırlatıcıları bul
     const reminders = await Reminder.find({
       sendTime: { $lte: currentTime },
+      sent: false, // Sadece gönderilmemiş hatırlatıcılar
     })
 
     // Zamanı gelen her hatırlatıcı için e-posta gönder
-    reminders.forEach(async (reminder) => {
-      sendMail(reminder)
-      // Gönderim işlemi tamamlandıktan sonra `sent` durumunu güncelle
-      await reminder.save()
-    })
+    for (const reminder of reminders) {
+      try {
+        await sendMail(reminder) // E-posta gönder
+        reminder.sent = true // Gönderildi olarak işaretle
+        await reminder.save() // Durumu kaydet
+      } catch (emailError) {
+        console.error('Hatırlatma gönderme sırasında hata:', emailError)
+      }
+    }
   } catch (error) {
     console.error('Cron job hatası:', error)
   }
@@ -55,9 +64,11 @@ cron.schedule('* * * * *', async () => {
 // Yeni reminder oluşturulduğunda schedule işlemini yap
 exports.createReminder = async (req, res) => {
   try {
-    const reminder = new Reminder(req.body)
+    const reminder = new Reminder({
+      ...req.body,
+      sent: false, // Yeni hatırlatıcı oluşturulduğunda varsayılan olarak `sent: false`
+    })
     await reminder.save()
-    scheduleMail(reminder) // Zamanlamayı ayarla
     res.status(201).json({
       data: reminder,
       message: 'Create Success',
