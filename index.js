@@ -7,6 +7,7 @@ const businessRoutes = require('./routes/businessRoutes')
 const employeeRoutes = require('./routes/employeeRoutes')
 const reminderRoutes = require('./routes/reminderRoutes')
 const opportunityRoutes = require('./routes/opportunityRoutes')
+const userRoutes = require('./routes/userRoutes')
 const bodyParser = require('body-parser')
 
 //! securty
@@ -22,6 +23,7 @@ app.use(cors()) // cors'u uygulamada kullanıyoruz
 app.use(bodyParser.json())
 app.use(helmet())
 
+app.use('/api/users', userRoutes)
 app.use('/api/customers', customerRoutes)
 app.use('/api/businesses', businessRoutes)
 app.use('/api/employees', employeeRoutes)
