@@ -40,20 +40,35 @@ exports.getOpportunityById = async (req, res) => {
 
 // Müşteri güncelleme
 exports.updateOpportunity = async (req, res) => {
+  const { id } = req.params
+  const { stage } = req.body
+
+  if (!stage) {
+    return res.status(400).json({ message: 'Stage bilgisi gerekli' })
+  }
+
   try {
     const opportunity = await Opportunity.findByIdAndUpdate(
-      req.params.id,
-      req.body,
+      id,
+      { stage },
       {
         new: true,
         runValidators: true,
       }
     )
-    if (!opportunity)
-      return res.status(404).json({ message: 'Fırsat bulunamadı' })
+
+    if (!opportunity) {
+      return res
+        .status(404)
+        .json({ message: `ID ${id} ile eşleşen fırsat bulunamadı` })
+    }
+
     res.status(200).json(opportunity)
   } catch (error) {
-    res.status(400).json({ message: error.message })
+    res.status(400).json({
+      message: 'Fırsat güncellenirken bir hata oluştu',
+      error: error.message,
+    })
   }
 }
 
