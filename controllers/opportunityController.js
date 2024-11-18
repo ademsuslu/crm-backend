@@ -31,7 +31,7 @@ exports.getOpportunityById = async (req, res) => {
       'assignedTo'
     )
     if (!opportunity)
-      return res.status(404).json({ message: 'Fırsat bulunamadı' })
+      return res.status(404).json({ message: 'Opportunity not found' })
     res.status(200).json(opportunity)
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -59,12 +59,12 @@ exports.updateOpportunity = async (req, res) => {
         .json({ message: `Name ${name} ile eşleşen fırsat bulunamadı` })
     }
 
-    res.status(200).json(opportunity)
-  } catch (error) {
-    res.status(400).json({
-      message: 'Fırsat güncellenirken bir hata oluştu',
-      error: error.message,
+    res.status(200).json({
+      data: opportunity,
+      message: 'Update Success',
     })
+  } catch (error) {
+    res.status(400).json({ message: error.message })
   }
 }
 
