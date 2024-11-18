@@ -41,26 +41,22 @@ exports.getOpportunityById = async (req, res) => {
 // Müşteri güncelleme
 exports.updateOpportunity = async (req, res) => {
   const { id } = req.params
-  const { stage } = req.body
+  const { stage, name } = req.body
 
   if (!stage) {
     return res.status(400).json({ message: 'Stage bilgisi gerekli' })
   }
 
   try {
-    const opportunity = await Opportunity.findByIdAndUpdate(
-      id,
-      { stage },
-      {
-        new: true,
-        runValidators: true,
-      }
-    )
+    const opportunity = await Opportunity.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    })
 
     if (!opportunity) {
       return res
         .status(404)
-        .json({ message: `ID ${id} ile eşleşen fırsat bulunamadı` })
+        .json({ message: `Name ${name} ile eşleşen fırsat bulunamadı` })
     }
 
     res.status(200).json(opportunity)
