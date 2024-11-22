@@ -54,7 +54,7 @@ exports.updateEmployee = async (req, res) => {
     if (!employee) {
       return res.status(404).json({ message: 'Çalışan bulunamadı' })
     }
-    res.status(200).json(employee)
+    res.status(200).json(employee, { message: 'Employee has been updated' })
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
@@ -67,7 +67,7 @@ exports.deleteEmployee = async (req, res) => {
     if (!employee) {
       return res.status(404).json({ message: 'Çalışan bulunamadı' })
     }
-    res.status(200).json({ message: 'Çalışan silindi' })
+    res.status(200).json({ message: 'Employee has been deleted.' })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
