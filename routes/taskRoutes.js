@@ -8,6 +8,9 @@ router.post('/', taskController.createTask)
 // Görevleri listeleme
 router.get('/', taskController.getTasks)
 
+// Id ye göre görev getirme
+router.put('/:taskId', taskController.getTaskById)
+
 // Görev güncelleme
 router.put('/:taskId', taskController.updateTask)
 

@@ -38,7 +38,19 @@ exports.getTasks = async (req, res) => {
     res.status(500).json({ message: 'Bir hata oluştu', error: error.message })
   }
 }
-
+exports.getTaskById = async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id).populate(
+      'assignedEmployees'
+    )
+    if (!task) {
+      return res.status(404).json({ message: 'İş yeri bulunamadı' })
+    }
+    res.status(200).json(task)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
 // Görev güncelleme
 exports.updateTask = async (req, res) => {
   try {
