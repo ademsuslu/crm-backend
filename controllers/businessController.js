@@ -24,7 +24,9 @@ exports.getAllBusinesses = async (req, res) => {
 // Belirli bir iş yerini getirme
 exports.getBusinessById = async (req, res) => {
   try {
-    const business = await Business.findById(req.params.id)
+    const business = await Business.findById(req.params.id).populate(
+      'employees'
+    )
     if (!business) {
       return res.status(404).json({ message: 'İş yeri bulunamadı' })
     }
