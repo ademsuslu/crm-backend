@@ -7,7 +7,7 @@ exports.createCustomer = async (req, res) => {
     await customer.save()
     res.status(201).json({
       data: customer,
-      message: 'Create Success',
+      message: 'Customer Create Success',
     })
   } catch (error) {
     res.status(400).json({ message: 'Create Unsuccess! ' })
@@ -48,7 +48,7 @@ exports.updateCustomer = async (req, res) => {
     }
     res.status(200).json({
       data: customer,
-      message: 'Edit Success',
+      message: 'Customer Update has been Success',
     })
   } catch (error) {
     res.status(400).json({ message: 'Edit Unsuccess!' })
@@ -62,7 +62,7 @@ exports.deleteCustomer = async (req, res) => {
     if (!customer) {
       return res.status(404).json({ message: 'Müşteri bulunamadı' })
     }
-    res.status(200).json({ message: 'Müşteri silindi' })
+    res.status(200).json({ message: 'Customer has been deleted.' })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
