@@ -74,7 +74,7 @@ exports.deleteOpportunity = async (req, res) => {
     const opportunity = await Opportunity.findByIdAndDelete(req.params.id)
     if (!opportunity)
       return res.status(404).json({ message: 'Fırsat bulunamadı' })
-    res.status(200).json({ message: 'Fırsat başarıyla silindi' })
+    res.status(200).json({ message: 'Opportunity has been deleted.' })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }

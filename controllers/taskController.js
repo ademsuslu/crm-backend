@@ -70,7 +70,7 @@ exports.updateTask = async (req, res) => {
 
     res
       .status(200)
-      .json({ message: 'Görev başarıyla güncellendi!', task: updatedTask })
+      .json({ message: 'Task has been updated.', task: updatedTask })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Bir hata oluştu', error: error.message })
@@ -87,7 +87,7 @@ exports.deleteTask = async (req, res) => {
       return res.status(404).json({ message: 'Görev bulunamadı' })
     }
 
-    res.status(200).json({ message: 'Görev başarıyla silindi!' })
+    res.status(200).json({ message: 'Task has been deleted.' })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Bir hata oluştu', error: error.message })
