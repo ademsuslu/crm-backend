@@ -5,7 +5,7 @@ exports.createBusiness = async (req, res) => {
   try {
     const business = new Business(req.body)
     await business.save()
-    res.status(201).json(business)
+    res.status(201).json(business, { message: 'Create business Successfully' })
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
@@ -45,7 +45,7 @@ exports.updateBusiness = async (req, res) => {
     if (!business) {
       return res.status(404).json({ message: 'İş yeri bulunamadı' })
     }
-    res.status(200).json(business)
+    res.status(200).json(business, { message: 'Updated business Successfully' })
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
@@ -58,7 +58,7 @@ exports.deleteBusiness = async (req, res) => {
     if (!business) {
       return res.status(404).json({ message: 'İş yeri bulunamadı' })
     }
-    res.status(200).json({ message: 'İş yeri silindi' })
+    res.status(200).json({ message: 'Delete Business Successfully' })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }

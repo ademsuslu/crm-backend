@@ -32,7 +32,7 @@ exports.getTasks = async (req, res) => {
       'assignedEmployees',
       'name position phone'
     ) // Çalışan bilgilerini dahil et
-    res.status(200).json(tasks)
+    res.status(200).json({ data: tasks, message: 'Tasks' })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Bir hata oluştu', error: error.message })
