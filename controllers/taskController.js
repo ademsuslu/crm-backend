@@ -26,10 +26,10 @@ const Employee = require('../models/Employee')
 // }
 exports.createTask = async (req, res) => {
   try {
-    const Task = new Task(req.body)
-    await Task.save()
+    const task = new Task(req.body)
+    await task.save()
     res.status(201).json({
-      data: Task,
+      data: task,
       message: 'Task Create Success',
     })
   } catch (error) {
