@@ -9,12 +9,13 @@ router.post('/', taskController.createTask)
 router.get('/', taskController.getTasks)
 
 // Id ye göre görev getirme
-router.put('/:taskId', taskController.getTaskById)
+router.get('/:id', taskController.getTaskById)
+// router.put('/:id', taskController.getTaskById)
 
 // Görev güncelleme
-router.put('/:taskId', taskController.updateTask)
+router.put('/:id', taskController.updateTask)
 
 // Görev silme
-router.delete('/:taskId', taskController.deleteTask)
+router.delete('/:id', taskController.deleteTask)
 
 module.exports = router
