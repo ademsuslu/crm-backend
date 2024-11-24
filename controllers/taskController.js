@@ -2,29 +2,40 @@ const Task = require('../models/Task')
 const Employee = require('../models/Employee')
 
 // Yeni görev oluşturma
+// exports.createTask = async (req, res) => {
+//   try {
+//     const { title, description, priority, dueDate, assignedEmployees } =
+//       req.body
+
+//     // Görev oluşturma
+//     const task = new Task({
+//       title,
+//       description,
+//       priority,
+//       dueDate,
+//       assignedEmployees,
+//     })
+
+//     // Görevi kaydet
+//     await task.save()
+//     res.status(201).json({ message: 'Görev başarıyla oluşturuldu!', task })
+//   } catch (error) {
+//     console.error(error)
+//     res.status(500).json({ message: 'Bir hata oluştu', error: error.message })
+//   }
+// }
 exports.createTask = async (req, res) => {
   try {
-    const { title, description, priority, dueDate, assignedEmployees } =
-      req.body
-
-    // Görev oluşturma
-    const task = new Task({
-      title,
-      description,
-      priority,
-      dueDate,
-      assignedEmployees,
+    const Task = new Task(req.body)
+    await Task.save()
+    res.status(201).json({
+      data: Task,
+      message: 'Task Create Success',
     })
-
-    // Görevi kaydet
-    await task.save()
-    res.status(201).json({ message: 'Görev başarıyla oluşturuldu!', task })
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Bir hata oluştu', error: error.message })
+    res.status(400).json({ message: 'Create Unsuccess! ' })
   }
 }
-
 // Görevleri listeleme
 exports.getTasks = async (req, res) => {
   try {
