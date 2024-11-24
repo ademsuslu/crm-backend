@@ -45,7 +45,7 @@ exports.updateBusiness = async (req, res) => {
     if (!business) {
       return res.status(404).json({ message: 'İş yeri bulunamadı' })
     }
-    res.status(200).json(business, { message: 'Updated business Successfully' })
+    res.status(200).json({ message: 'Updated business Successfully' })
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
