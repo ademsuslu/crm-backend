@@ -62,29 +62,21 @@ exports.getTaskById = async (req, res) => {
     res.status(500).json({ message: error.message })
   }
 }
-// Görev güncelleme
+
 exports.updateTask = async (req, res) => {
   try {
-    const { taskId } = req.params
-    const { title, description, priority, dueDate, assignedEmployees, status } =
-      req.body
-
-    const updatedTask = await Task.findByIdAndUpdate(
-      taskId,
-      { title, description, priority, dueDate, assignedEmployees, status },
-      { new: true } // Güncellenen task'ı geri döndür
-    )
-
+    const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    })
     if (!updatedTask) {
-      return res.status(404).json({ message: 'Görev bulunamadı' })
+      return res.status(404).json({ message: 'Task not found' })
     }
-
-    res
-      .status(200)
-      .json({ message: 'Task has been updated.', task: updatedTask })
+    res.status(200).json({
+      data: updatedTask,
+      message: 'Task Update has been Success',
+    })
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Bir hata oluştu', error: error.message })
+    res.status(400).json({ message: 'Edit Unsuccess!' })
   }
 }
 
