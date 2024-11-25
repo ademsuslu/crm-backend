@@ -89,18 +89,15 @@ exports.updateTask = async (req, res) => {
 }
 
 // Görev silme
+
 exports.deleteTask = async (req, res) => {
   try {
-    const { taskId } = req.params
-    const deletedTask = await Task.findByIdAndDelete(taskId)
-
+    const deletedTask = await Task.findByIdAndDelete(req.params.id)
     if (!deletedTask) {
-      return res.status(404).json({ message: 'Görev bulunamadı' })
+      return res.status(404).json({ message: 'Task bulunamadı' })
     }
-
     res.status(200).json({ message: 'Task has been deleted.' })
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Bir hata oluştu', error: error.message })
+    res.status(500).json({ message: error.message })
   }
 }
