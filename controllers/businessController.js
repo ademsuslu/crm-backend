@@ -5,7 +5,10 @@ exports.createBusiness = async (req, res) => {
   try {
     const business = new Business(req.body)
     await business.save()
-    res.status(201).json(business, { message: 'Create business Successfully' })
+    res.status(201).json({
+      data: business,
+      message: 'Business Create Success',
+    })
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
