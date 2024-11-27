@@ -56,7 +56,7 @@ exports.updateOpportunity = async (req, res) => {
     if (!opportunity) {
       return res
         .status(404)
-        .json({ message: `Name ${name} ile eşleşen fırsat bulunamadı` })
+        .json({ message: `Name ${name} ile eşleşen Opportunity not found` })
     }
 
     res.status(200).json({
@@ -73,7 +73,7 @@ exports.deleteOpportunity = async (req, res) => {
   try {
     const opportunity = await Opportunity.findByIdAndDelete(req.params.id)
     if (!opportunity)
-      return res.status(404).json({ message: 'Fırsat bulunamadı' })
+      return res.status(404).json({ message: 'Opportunity not found' })
     res.status(200).json({ message: 'Opportunity has been deleted.' })
   } catch (error) {
     res.status(500).json({ message: error.message })
