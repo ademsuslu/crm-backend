@@ -5,7 +5,10 @@ exports.createEmployee = async (req, res) => {
   try {
     const employee = new Employee(req.body)
     await employee.save()
-    res.status(201).json(employee)
+    res.status(201).json({
+      data: employee,
+      message: 'Employee Create Success',
+    })
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
@@ -37,7 +40,7 @@ exports.getEmployeeById = async (req, res) => {
       'businessId'
     )
     if (!employee) {
-      return res.status(404).json({ message: 'Çalışan bulunamadı' })
+      return res.status(404).json({ message: 'Employee not found' })
     }
     res.status(200).json(employee)
   } catch (error) {
@@ -52,7 +55,7 @@ exports.updateEmployee = async (req, res) => {
       new: true,
     })
     if (!employee) {
-      return res.status(404).json({ message: 'Çalışan bulunamadı' })
+      return res.status(404).json({ message: 'Employee not found' })
     }
     res.status(200).json({ message: 'Employee has been updated' })
   } catch (error) {
@@ -65,7 +68,7 @@ exports.deleteEmployee = async (req, res) => {
   try {
     const employee = await Employee.findByIdAndDelete(req.params.id)
     if (!employee) {
-      return res.status(404).json({ message: 'Çalışan bulunamadı' })
+      return res.status(404).json({ message: 'Employee not found' })
     }
     res.status(200).json({ message: 'Employee has been deleted.' })
   } catch (error) {
