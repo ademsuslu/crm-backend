@@ -31,7 +31,7 @@ exports.getBusinessById = async (req, res) => {
       'employees'
     )
     if (!business) {
-      return res.status(404).json({ message: 'İş yeri bulunamadı' })
+      return res.status(404).json({ message: 'Bussiness not found' })
     }
     res.status(200).json(business)
   } catch (error) {
@@ -46,7 +46,7 @@ exports.updateBusiness = async (req, res) => {
       new: true,
     })
     if (!business) {
-      return res.status(404).json({ message: 'İş yeri bulunamadı' })
+      return res.status(404).json({ message: 'Bussiness not found' })
     }
     res.status(200).json({ message: 'Updated business Successfully' })
   } catch (error) {
@@ -59,7 +59,7 @@ exports.deleteBusiness = async (req, res) => {
   try {
     const business = await Business.findByIdAndDelete(req.params.id)
     if (!business) {
-      return res.status(404).json({ message: 'İş yeri bulunamadı' })
+      return res.status(404).json({ message: 'Bussiness not found' })
     }
     res.status(200).json({ message: 'Delete Business Successfully' })
   } catch (error) {

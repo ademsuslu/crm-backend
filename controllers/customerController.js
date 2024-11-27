@@ -29,7 +29,7 @@ exports.getCustomerById = async (req, res) => {
   try {
     const customer = await Customer.findById(req.params.id)
     if (!customer) {
-      return res.status(404).json({ message: 'Müşteri bulunamadı' })
+      return res.status(404).json({ message: 'Customer not found' })
     }
     res.status(200).json(customer)
   } catch (error) {
@@ -44,7 +44,7 @@ exports.updateCustomer = async (req, res) => {
       new: true,
     })
     if (!customer) {
-      return res.status(404).json({ message: 'Müşteri bulunamadı' })
+      return res.status(404).json({ message: 'Customer not found' })
     }
     res.status(200).json({
       data: customer,
@@ -60,7 +60,7 @@ exports.deleteCustomer = async (req, res) => {
   try {
     const customer = await Customer.findByIdAndDelete(req.params.id)
     if (!customer) {
-      return res.status(404).json({ message: 'Müşteri bulunamadı' })
+      return res.status(404).json({ message: 'Customer not found' })
     }
     res.status(200).json({ message: 'Customer has been deleted.' })
   } catch (error) {
@@ -87,7 +87,7 @@ exports.searchCustomer = async (req, res) => {
     })
 
     if (customers.length === 0) {
-      return res.status(404).json({ message: 'Müşteri bulunamadı.' })
+      return res.status(404).json({ message: 'Customer not found.' })
     }
 
     return res.status(200).json(customers) // return ifadesini ekleyin
