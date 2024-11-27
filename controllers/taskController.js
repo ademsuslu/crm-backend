@@ -46,7 +46,9 @@ exports.getTasks = async (req, res) => {
     res.status(200).json({ data: tasks, message: 'Tasks' })
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Bir hata oluştu', error: error.message })
+    res
+      .status(500)
+      .json({ message: 'Sometihk went wrong', error: error.message })
   }
 }
 exports.getTaskById = async (req, res) => {
@@ -55,7 +57,7 @@ exports.getTaskById = async (req, res) => {
       'assignedEmployees'
     )
     if (!task) {
-      return res.status(404).json({ message: 'İş yeri bulunamadı' })
+      return res.status(404).json({ message: 'Task not found' })
     }
     res.status(200).json(task)
   } catch (error) {
@@ -86,7 +88,7 @@ exports.deleteTask = async (req, res) => {
   try {
     const deletedTask = await Task.findByIdAndDelete(req.params.id)
     if (!deletedTask) {
-      return res.status(404).json({ message: 'Task bulunamadı' })
+      return res.status(404).json({ message: 'Task not found' })
     }
     res.status(200).json({ message: 'Task has been deleted.' })
   } catch (error) {

@@ -18,12 +18,12 @@ exports.createUser = async (req, res) => {
     // Aynı email'e sahip bir kullanıcı var mı kontrol et
     const existingUser = await User.findOne({ email })
     if (existingUser) {
-      return res.status(400).json({ message: 'Bu email zaten kullanılıyor' })
+      return res.status(400).json({ message: 'Email already use' })
     }
 
     const user = new User({ name, email, password, role })
     await user.save()
-    res.status(201).json(user)
+    res.status(201).json({ data: user, message: 'User has been created.' })
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
@@ -33,7 +33,7 @@ exports.createUser = async (req, res) => {
 exports.getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
-    if (!user) return res.status(404).json({ message: 'Kullanıcı bulunamadı' })
+    if (!user) return res.status(404).json({ message: 'User not found' })
     res.status(200).json(user)
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -47,8 +47,8 @@ exports.updateUser = async (req, res) => {
       new: true,
       runValidators: true,
     })
-    if (!user) return res.status(404).json({ message: 'Kullanıcı bulunamadı' })
-    res.status(200).json(user, { message: 'User has been update.' })
+    if (!user) return res.status(404).json({ message: 'User not found' })
+    res.status(200).json({ data: user, message: 'User has been update.' })
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
@@ -58,7 +58,7 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id)
-    if (!user) return res.status(404).json({ message: 'Kullanıcı bulunamadı' })
+    if (!user) return res.status(404).json({ message: 'User not found' })
     res.status(200).json({ message: 'User has been deleted.' })
   } catch (error) {
     res.status(500).json({ message: error.message })
