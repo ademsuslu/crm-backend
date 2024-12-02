@@ -1,19 +1,12 @@
 const mongoose = require('mongoose')
 const plansSchema = new mongoose.Schema(
   {
-    startDate: {
-      type: Date,
-      required: true, // Başlangıç tarihi zorunlu
-    },
-    endDate: {
-      type: Date,
-      required: true, // Bitiş tarihi zorunlu
-    },
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // Kullanıcı ile ilişki kurmak için
-      required: true, // Kullanıcı ID'si zorunlu
-    },
+    //! ordere eklenecek userId
+    // userId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'User', // Kullanıcı ile ilişki kurmak için
+    //   required: true, // Kullanıcı ID'si zorunlu
+    // },
     plan: {
       type: String,
       required: true,
