@@ -1,4 +1,5 @@
-const Plans = require('../models/Plans')
+const Plans = require('../models/PlanModel') // Reminder modelini projenize göre import edin
+
 exports.createPlan = async (req, res) => {
   try {
     const plan = new Plans(req.body)
