@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
-
-const reminderSchema = new mongoose.Schema(
+const plansSchema = new mongoose.Schema(
   {
     startDate: {
       type: Date,
@@ -34,4 +33,4 @@ const reminderSchema = new mongoose.Schema(
   { timestamps: true } // Oluşturulma ve güncellenme zamanlarını otomatik ekler
 )
 
-module.exports = mongoose.model('Reminder', reminderSchema)
+module.exports = mongoose.model('Plans', plansSchema)
