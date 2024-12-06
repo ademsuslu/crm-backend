@@ -36,6 +36,17 @@ exports.getBlogById = async (req, res) => {
     res.status(500).json({ message: error.message })
   }
 }
+exports.getBlogByTitle = async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.title)
+    if (!blog) {
+      return res.status(404).json({ message: 'Blog not found' })
+    }
+    res.status(200).json(blog)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
 
 // İş yeri güncelleme
 exports.updateBlog = async (req, res) => {
