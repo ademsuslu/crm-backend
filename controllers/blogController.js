@@ -38,7 +38,7 @@ exports.getBlogById = async (req, res) => {
 }
 exports.getBlogByTitle = async (req, res) => {
   try {
-    const blog = await Blog.findById(req.params.title)
+    const blog = await Blog.findOne({ title: req.params.title })
     if (!blog) {
       return res.status(404).json({ message: 'Blog not found' })
     }
